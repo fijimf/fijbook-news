@@ -1,0 +1,336 @@
+    <?xml version="1.0"?><rss version="2.0"
+                          xmlns:content="http://purl.org/rss/1.0/modules/content/"
+                          xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+                          xmlns:dc="http://purl.org/dc/elements/1.1/"
+                          xmlns:atom="http://www.w3.org/2005/Atom"
+                          xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+                          xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+                          xmlns:media="http://search.yahoo.com/mrss/"
+                          xmlns:georss="http://www.georss.org/georss"
+                          xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
+>
+    <channel>
+        <title>Latest News</title>
+        <atom:link href="https://www.si.com/rss/si_topstories.rss" rel="self" type="application/rss+xml"/>
+        <link>https://www.si.com/rss/si_topstories.rss</link>  <description>The latest news and headlines from HTTPS://WWW.SI.COM/</description>
+        <pubDate>Tue, 20 Aug 2019 20:20:39 +0000</pubDate>
+
+        <item>
+            <title><![CDATA[Top 2020 Point Guard Recruit Daishen Nix Commits to UCLA]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/20/daishen-nix-recruiting-commits-ucla-bruins</link>
+            <dc:creator><![CDATA[Molly Geary]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[Mick Cronin landed the first major recruit of his UCLA tenure in five-star Daishen Nix.
+]]></description>
+            <pubDate>Tue, 20 Aug 2019 18:30:17 +0000</pubDate>
+
+            <guid isPermaLink="false">14429828</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/20/ucla-basketball-daishen-nix-commits-2020.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/20/ucla-basketball-daishen-nix-commits-2020.jpg"/>
+
+        </item>
+        <item>
+            <title><![CDATA[Trendon Watford Was an Important Score for LSU Both On and Off the Court]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/19/lsu-tigers-trendon-watford-recruiting</link>
+            <dc:creator><![CDATA[Emily Caron]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <category><![CDATA[Top Freshmen 2019]]></category>
+            <description><![CDATA[After experiencing a program revitalization last season, LSU needs Trendon Watford to help keep the momentum going for the Tigers.
+]]></description>
+            <pubDate>Mon, 19 Aug 2019 17:26:26 +0000</pubDate>
+
+            <guid isPermaLink="false">14429160</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/19/trendon-watford-lsu-basketball-recruiting-2019.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/19/trendon-watford-lsu-basketball-recruiting-2019.jpg"/>
+
+        </item>
+        <item>
+            <title><![CDATA[Four-Star Addison Patterson Commits to Oregon, Will Reclassify to 2019]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/18/addison-patterson-oregon-verbally-committed</link>
+            <dc:creator><![CDATA[Charlotte Carroll]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[Four-star guard Addison Patterson verbally committed to Oregon on Sunday.
+]]></description>
+            <pubDate>Sun, 18 Aug 2019 23:51:59 +0000</pubDate>
+
+            <guid isPermaLink="false">14428710</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/18/oregon-ducks-_addison-patterson.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/18/oregon-ducks-_addison-patterson.jpg"/>
+
+            <LinkedVideo>6072320352001</LinkedVideo>
+        </item>
+        <item>
+            <title><![CDATA[Isaiah Mobley, Onyeka Okongwu Give USC's Frontcourt Plenty of Potential]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/16/usc-recruiting-isaiah-mobley-onyeka-okongwu-andy-enfield</link>
+            <dc:creator><![CDATA[Emily Caron]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <category><![CDATA[Top Freshmen 2019]]></category>
+            <description><![CDATA[A pair of top-25 five-star recruits headlines USC's incoming class, and could set up the Trojans for a surprising Pac-12 run this upcoming season.
+]]></description>
+            <pubDate>Fri, 16 Aug 2019 15:26:04 +0000</pubDate>
+
+            <guid isPermaLink="false">14427244</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/15/usc-basketball-isaiah-mobley-onyeka-okongwu.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/15/usc-basketball-isaiah-mobley-onyeka-okongwu.jpg"/>
+
+        </item>
+        <item>
+            <title><![CDATA[Identifying the Best Value Bets to Win the 2020 National Title]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/15/sleeper-national-championship-bets-futures-florida-texas-tech-maryland</link>
+            <dc:creator><![CDATA[The SI Staff]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <category><![CDATA[Gambling]]></category>
+            <description><![CDATA[There's plenty of value when betting college basketball futures, and SI's college basketball staff has identified three sleepers that can win you a lot of money come April.
+]]></description>
+            <pubDate>Thu, 15 Aug 2019 22:10:18 +0000</pubDate>
+
+            <guid isPermaLink="false">14425980</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/13/andrew_nembhard_florida_gators.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/13/andrew_nembhard_florida_gators.jpg"/>
+
+            <LinkedVideo>6072320352001</LinkedVideo>
+        </item>
+        <item>
+            <title><![CDATA[Michael Avenatti Motion Alleges Nike Approved Payments to Zion, Romeo Langford]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/15/michael-avenatti-motion-nike-payments-zion-williamson-romeo-langford</link>
+            <dc:creator><![CDATA[Jenna West]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[A motion filed on behalf of Michael Avenatti alleges payments to amateur basketball players.
+]]></description>
+            <pubDate>Thu, 15 Aug 2019 16:28:34 +0000</pubDate>
+
+            <guid isPermaLink="false">14426965</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/15/avenatti-nike-payments-zion-romeo.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/15/avenatti-nike-payments-zion-romeo.jpg"/>
+
+            <LinkedVideo>6072320352001</LinkedVideo>
+        </item>
+        <item>
+            <title><![CDATA[Headlined by Star Anthony Edwards, Georgia's 2019 Class Has Bulldogs Looking Up]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/15/georgia-bulldogs-recruiting-tom-crean-anthony-edwards</link>
+            <dc:creator><![CDATA[Emily Caron]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA["Georgia basketball" and "top recruits" haven't often been synonymous, but Tom Crean's 2019 class brings a big change to the narrative.
+]]></description>
+            <pubDate>Thu, 15 Aug 2019 15:44:34 +0000</pubDate>
+
+            <guid isPermaLink="false">14426504</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/14/georgia-basketball-tom-crean-anthony-edwards.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/14/georgia-basketball-tom-crean-anthony-edwards.jpg"/>
+
+        </item>
+        <item>
+            <title><![CDATA[Samuell Williamson Leads a Freshman Class That Could Put Louisville Over the Top]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/14/louisville-cardinals-samuell-williamson-recruiting</link>
+            <dc:creator><![CDATA[Emily Caron]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <category><![CDATA[Top Freshmen 2019]]></category>
+            <description><![CDATA[Joining with a strong returning core, five-star Samuell Williamson and his co-freshmen could be the missing pieces the Cardinals need to contend for a title.
+]]></description>
+            <pubDate>Wed, 14 Aug 2019 16:20:13 +0000</pubDate>
+
+            <guid isPermaLink="false">14426300</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/14/louisville-basketball-samuell-williamson-highlights.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/14/louisville-basketball-samuell-williamson-highlights.jpg"/>
+
+        </item>
+        <item>
+            <title><![CDATA[Five-Star N'Faly Dante Commits to Oregon Over Kentucky, Will Reclassify to 2019]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/13/oregon-ducks-nfaly-dante-commits-recruiting</link>
+            <dc:creator><![CDATA[Molly Geary]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[The Ducks made a summer splash by landing fast-rising five-star N'Faly Dante, who also joined the 2019 recruiting class.
+]]></description>
+            <pubDate>Tue, 13 Aug 2019 17:15:38 +0000</pubDate>
+
+            <guid isPermaLink="false">14425861</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/13/oregon-basketball-nfaly-dante-commits.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/13/oregon-basketball-nfaly-dante-commits.jpg"/>
+
+        </item>
+        <item>
+            <title><![CDATA[NCAA Amends 'Rich Paul Rule', Won't Require Agents to Have Bachelor's Degree]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/12/ncaa-agent-requirements-bachelors-degree-rich-paul-rule</link>
+            <dc:creator><![CDATA[Michael Shapiro]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[The NCAA drew outrage last week for requiring a college degree from every prospective agent.
+]]></description>
+            <pubDate>Mon, 12 Aug 2019 18:23:19 +0000</pubDate>
+
+            <guid isPermaLink="false">14425361</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/12/rich-paul-rule-ncaa.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/12/rich-paul-rule-ncaa.jpg"/>
+
+            <LinkedVideo>6069815584001</LinkedVideo>
+        </item>
+        <item>
+            <title><![CDATA[Josiah-Jordan James Will Have Major Responsibility Right Away for Tennessee]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/12/tennessee-vols-josiah-jordan-james-recruiting</link>
+            <dc:creator><![CDATA[Emily Caron]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <category><![CDATA[Top Freshmen 2019]]></category>
+            <description><![CDATA[With so many departures from last season's Sweet 16 team, Josiah-Jordan James will have plenty of responsibility right off the bat for the Vols.
+]]></description>
+            <pubDate>Mon, 12 Aug 2019 15:13:58 +0000</pubDate>
+
+            <guid isPermaLink="false">14425180</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/12/tennessee-basketball-josiah-jordan-james.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/12/tennessee-basketball-josiah-jordan-james.jpg"/>
+
+        </item>
+        <item>
+            <title><![CDATA[BYU Forward Yoeli Childs Suspended Nine Games for Paperwork, Agent Errors]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/10/yoeli-childs-suspension-nine-games-byu-nba-draft-error</link>
+            <dc:creator><![CDATA[Michael Shapiro]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[Childs did not submit the correct draft paperwork and reportedly received impermissible benefits from an agent.
+]]></description>
+            <pubDate>Sat, 10 Aug 2019 23:15:05 +0000</pubDate>
+
+            <guid isPermaLink="false">14424361</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/10/yoeli-childs-byu.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/10/yoeli-childs-byu.jpg"/>
+
+            <LinkedVideo>6024322822001</LinkedVideo>
+        </item>
+        <item>
+            <title><![CDATA[Big Man Armando Bacot Fills a Much-Needed Void for North Carolina]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/09/unc-tar-heels-armando-bacot-recruiting</link>
+            <dc:creator><![CDATA[Emily Caron]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <category><![CDATA[Top Freshmen 2019]]></category>
+            <description><![CDATA[Armando Bacot brings valuable size and a low-post threat to UNC's incoming top-10 freshman class.
+]]></description>
+            <pubDate>Fri, 09 Aug 2019 14:54:55 +0000</pubDate>
+
+            <guid isPermaLink="false">14423199</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/08/armando-bacot-unc-basketball-tar-heels.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/08/armando-bacot-unc-basketball-tar-heels.jpg"/>
+
+        </item>
+        <item>
+            <title><![CDATA[Texas Guard Andrew Jones Cleared for Basketball Activities After Leukemia Battle]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/08/andrew-jones-texas-basketball-cleared-leukemia-battle</link>
+            <dc:creator><![CDATA[Michael Shapiro]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[Jones completed his chemotherapy treatments at the MD Anderson Cancer Center in Houston in November 2018
+]]></description>
+            <pubDate>Thu, 08 Aug 2019 16:39:17 +0000</pubDate>
+
+            <guid isPermaLink="false">14423075</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/08/andrew-jones-texas.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/08/andrew-jones-texas.jpg"/>
+
+        </item>
+        <item>
+            <title><![CDATA[Class Evaluation: Hopkins's Recruiting Efforts Pay Off for Washington in 2019]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/08/washington-recruiting-mike-hopkins-isaiah-stewart</link>
+            <dc:creator><![CDATA[Emily Caron]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[Headlined by two top-10 recruits, Washington's freshmen are going to need to have an immediate impact if the Huskies are to defend their Pac-12 crown.
+]]></description>
+            <pubDate>Thu, 08 Aug 2019 15:46:58 +0000</pubDate>
+
+            <guid isPermaLink="false">14422943</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/08/washington-basketball-recruiting-stewart-mcdaniels.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/08/washington-basketball-recruiting-stewart-mcdaniels.jpg"/>
+
+            <LinkedVideo>6069094339001</LinkedVideo>
+        </item>
+        <item>
+            <title><![CDATA[NCAA Issues Statement to Defend Agent Certification Process]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/07/ncaa-issues-statement-defending-criteria-agent-certification</link>
+            <dc:creator><![CDATA[Associated Press]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[The NCAA released a statement saying that it values a college education and continues to emphasize the importance of earning a degree.
+]]></description>
+            <pubDate>Thu, 08 Aug 2019 01:24:19 +0000</pubDate>
+
+            <guid isPermaLink="false">14422572</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/07/ncaa-logo-criteria-changes.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/07/ncaa-logo-criteria-changes.jpg"/>
+
+            <LinkedVideo>6069094339001</LinkedVideo>
+        </item>
+        <item>
+            <title><![CDATA[Arizona's Brandon Williams Out for Season Following Knee Surgery]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/07/arizona-brandon-williams-out-season-injury-updates</link>
+            <dc:creator><![CDATA[Charlotte Carroll]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[Arizona guard Brandon Williams will miss the entire 2019-20 season after undergoing knee surgery.
+]]></description>
+            <pubDate>Thu, 08 Aug 2019 00:43:24 +0000</pubDate>
+
+            <guid isPermaLink="false">14422569</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/07/brandon-williams-arizona-guard.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/07/brandon-williams-arizona-guard.jpg"/>
+
+            <LinkedVideo>6069095842001</LinkedVideo>
+        </item>
+        <item>
+            <title><![CDATA[Report: Auburn Basketball Self-Imposed Severe Sanctions After FBI Investigation]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/07/auburn-self-imposed-sanctions-fbi-ncaa-scandal</link>
+            <dc:creator><![CDATA[Emily Caron]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[The Tigers reportedly took measures into their own hands after a former assistant coach was arrested but did not disclose the sanctions.
+]]></description>
+            <pubDate>Wed, 07 Aug 2019 18:45:00 +0000</pubDate>
+
+            <guid isPermaLink="false">14422448</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/07/auburn-basketball-self-imposed-sanctions-fbi-investigation.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/07/auburn-basketball-self-imposed-sanctions-fbi-investigation.jpg"/>
+
+            <LinkedVideo>6069095842001</LinkedVideo>
+        </item>
+        <item>
+            <title><![CDATA[Keion Brooks's Versatility Will Be Valued on a Reloaded Kentucky Roster]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/07/kentucky-wildcats-keion-brooks-recruiting</link>
+            <dc:creator><![CDATA[Emily Caron]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <category><![CDATA[Top Freshmen 2019]]></category>
+            <description><![CDATA[Kentucky's roster will be crowded as always, but the offensive and defensive flexibility of the five-star will help him see the floor in Lexington.
+]]></description>
+            <pubDate>Wed, 07 Aug 2019 14:30:20 +0000</pubDate>
+
+            <guid isPermaLink="false">14421810</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/06/keion-brooks-kentucky-basketball-recruiting.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/06/keion-brooks-kentucky-basketball-recruiting.jpg"/>
+
+        </item>
+        <item>
+            <title><![CDATA[New 'Rich Paul Rule' Targeted at Agents Is NCAA's Latest Blunder]]></title>
+            <link>https://www.si.com/college-basketball/2019/08/07/ncaa-college-basketball-agent-criteria-rich-paul-nba-draft</link>
+            <dc:creator><![CDATA[Michael Rosenberg]]></dc:creator>
+            <category><![CDATA[College Basketball]]></category>
+            <description><![CDATA[Rich Paul doesn't pretend and is brutally honest about the college system and the NCAA hates that. The new criteria to exclude agents who do not have a bachelor's degree from representing players who test the NBA draft waters is nonsense.
+]]></description>
+            <pubDate>Wed, 07 Aug 2019 12:43:05 +0000</pubDate>
+
+            <guid isPermaLink="false">14422137</guid>
+
+            <media:thumbnail url="https://cdn-s3.si.com/s3fs-public/2019/08/07/rich-paul-anthony-davis-ncaa-rule.jpg"/>
+            <media:content url="https://cdn-s3.si.com/s3fs-public/2019/08/07/rich-paul-anthony-davis-ncaa-rule.jpg"/>
+
+            <LinkedVideo>6069815584001</LinkedVideo>
+        </item>
+    </channel>
+</rss>
