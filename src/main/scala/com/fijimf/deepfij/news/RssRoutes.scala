@@ -29,8 +29,8 @@ object RssRoutes {
   implicit def listFeedEntityEncoder[F[_] : Applicative]: EntityEncoder[F, List[RssFeed]] = jsonEncoderOf
   implicit def listItemEntityEncoder[F[_] : Applicative]: EntityEncoder[F, List[RssItem]] = jsonEncoderOf
 
-  def rssFeedRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdateImpl[F])(implicit z: Sync[F]): HttpRoutes[F] = {
-    val dsl = new Http4sDsl[F] {}
+  def rssFeedRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdateImpl[F])(implicit F: Sync[F]): HttpRoutes[F] = {
+    val dsl: Http4sDsl[F] = new Http4sDsl[F] {}
     import dsl._
     HttpRoutes.of[F] {
       case GET -> Root / "feeds" =>
@@ -41,6 +41,13 @@ object RssRoutes {
           resp
         }
       case GET -> Root / "feeds" / id =>
+        for {
+          list <- r.findFeed(id.toLong)
+          resp <- Ok(list)
+        } yield {
+          resp
+        }
+      case GET -> Root / "feeds" / id /"items"=>
         for {
           list <- r.findFeed(id.toLong)
           resp <- Ok(list)
@@ -60,7 +67,7 @@ object RssRoutes {
         for {
           items <- updater.updateFeed(id.toLong)
           list <- items.compile[F,F,RssItem].to[List]
-          _ <- z.delay(log.info(s"${list.size} new items saved."))
+          _ <- F.delay(log.info(s"${list.size} new items saved."))
           resp <- Ok(list)
         } yield {
           resp
