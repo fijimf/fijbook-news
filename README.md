@@ -13,4 +13,4 @@ News scraping subproject
 * `POST /refresh/:feedId`
 * `POST /verify/:feedId    [after=yyyyMMddHHmmss] [skipMissing] [skipUnverified]`
 * `GET /refreshJobs`
-* `GET /refreshJobs/:feedId
+* `GET /refreshJobs/:feedId`
