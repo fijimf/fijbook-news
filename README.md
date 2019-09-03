@@ -12,3 +12,5 @@ News scraping subproject
 * `DELETE /items/:itemId`
 * `POST /refresh/:feedId`
 * `POST /verify/:feedId    [after=yyyyMMddHHmmss] [skipMissing] [skipUnverified]`
+* `GET /refreshJobs`
+* `GET /refreshJobs/:feedId
