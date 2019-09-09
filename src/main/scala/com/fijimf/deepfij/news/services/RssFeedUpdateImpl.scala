@@ -1,53 +1,88 @@
 package com.fijimf.deepfij.news.services
 
-import cats.data.OptionT
+import java.time.LocalDateTime
+
 import cats.effect._
 import cats.implicits._
-import com.fijimf.deepfij.news.model.RssItem
+import com.fijimf.deepfij.news.model.{RssFeed, RssItem, RssRefreshJob}
 import com.fijimf.deepfij.news.util.RssXml
-import org.http4s.client.Client
+import org.http4s.client.{Client, UnexpectedStatus}
 import org.slf4j.{Logger, LoggerFactory}
 
 final case class RssFeedUpdateImpl[F[_]](httpClient: Client[F], repo: RssRepo[F])(implicit F: Async[F])  extends RssFeedUpdate [F]{
   val log:Logger=LoggerFactory.getLogger(getClass)
 
-  private def getUpdates(feedId: Long): F[List[RssItem]] = {
-    def infoSafely(msg: String): OptionT[F, Unit] = OptionT.liftF(F.delay(log.info(msg)))
-    def debugSafely(msg: String): OptionT[F, Unit] = OptionT.liftF(F.delay(log.info(msg)))
+  case class FeedUpdateState(feedId: Long, startTime: LocalDateTime, feed: Option[RssFeed], body: Option[String], status: Int, parsedItems: List[RssItem], savedItems: List[RssItem]) {
+    def load(): F[FeedUpdateState] = repo.findFeed(feedId) map {
+      case Some(f) => copy(feed = Some(f))
+      case None => this
+    }
 
-    (for {
-      feed <- OptionT(repo.findFeed(feedId))
-      _ <- infoSafely(s"Retrieving $feedId - ${feed.url}")
-      xml <- OptionT.liftF(httpClient.expect[String](feed.url))
-      _ <- infoSafely(s"Retrieved ${xml.length} bytes.")
-      createdItems <- OptionT.fromOption[F](createItems(xml, feed.id))
-      _ <- infoSafely(s"Created ${createdItems.length} items.")
-      _ <- debugSafely("Items:\n\t"+createdItems.map(_.title.take(36)+"...").mkString(",\n\t"))
-    } yield {
-      createdItems
-    }).getOrElseF(F.pure(List.empty[RssItem]))
-  }
+    def retrieve(): F[FeedUpdateState] = {
+      feed match {
+        case Some(f) =>
+          httpClient.expect[String](f.url).attempt.map(_.fold({
+            case u: UnexpectedStatus => copy(status = u.status.code)
+            case _: Throwable => copy(status = -1)
+          },
+            str => copy(body = Some(str), status = 200)
+          ))
+        case None => F.pure(this)
 
-  def createItems(s: String, id: Long): Option[List[RssItem]] = {
-    RssXml.loadXml(s) match {
-      case Left(_) => None
-      case Right(n) =>
-        for {
-          channel <- RssXml.findChannel(n)
-        } yield {
-          RssXml.channelNodeToItems(id, channel)
+      }
+    }
+
+    def createItems(): F[FeedUpdateState] = {
+      body match {
+        case Some(s) => RssXml.loadXml(s) match {
+          case Left(_) => F.pure(this)
+          case Right(n) =>
+            F.pure(copy(parsedItems = (for {
+              channel <- RssXml.findChannel(n)
+            } yield {
+              RssXml.channelNodeToItems(feedId, channel)
+            }).getOrElse(List.empty[RssItem])))
         }
+        case None => F.pure(this)
+      }
     }
+
+    def updateItems(): F[FeedUpdateState] = {
+      repo
+        .saveItems(parsedItems)
+        .compile[F, F, RssItem]
+        .fold(List.empty[RssItem]) { case (b, r) => r :: b }
+        .map(l => copy(savedItems = l))
+    }
+
+    def recordJob(): F[RssRefreshJob] = {
+      for {
+        j <- F.delay {
+          RssRefreshJob(0L, feedId, startTime, LocalDateTime.now() /* <- Is that an effect */ , status, parsedItems.size, savedItems.size)
+        }
+        k <- repo.insertRefreshJob(j)
+      } yield {
+        k
+      }
+    }
+  }
+
+  object FeedUpdateState {
+    def init(id: Long): FeedUpdateState = FeedUpdateState(id, LocalDateTime.now(), None, None, 0, List.empty[RssItem], List.empty[RssItem])
 
   }
 
-  override def updateFeed(feedId: Long): F[fs2.Stream[F,RssItem]] = {
-    for{
-      items<-getUpdates(feedId)
-      _ <- F.delay(log.info(s"Retrieved ${items.size} items from the feed"))
-      res = repo.saveItems(items)
-    } yield{
-      res
+  override def updateFeed(feedId: Long): F[List[RssItem]] = {
+    for {
+      a <- FeedUpdateState.init(feedId).load()
+      b <- a.retrieve()
+      c <- b.createItems()
+      d <- c.updateItems()
+      _ <- d.recordJob()
+    } yield {
+      d.savedItems
     }
   }
+
+
 }

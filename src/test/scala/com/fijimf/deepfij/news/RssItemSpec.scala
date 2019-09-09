@@ -27,10 +27,10 @@ class RssItemSpec extends FunSuite with Matchers with doobie.scalatest.IOChecker
   }
 
   test("insert") {
-    check(RssItem.Dao.insert(RssItem(0L, 1L, "DUMMY", "https://junk.z.x.y/ppp/qqq", None, LocalDateTime.now(), LocalDateTime.now())))
+    check(RssItem.Dao.insert(RssItem(0L, 1L, "DUMMY", "https://junk.z.x.y/ppp/qqq", None, LocalDateTime.now(), LocalDateTime.now(), None,None,None,None)))
   }
   test("update") {
-    check(RssItem.Dao.insert(RssItem(34L, 1L, "DUMMY", "https://junk.z.x.y/ppp/qqq", None, LocalDateTime.now(), LocalDateTime.now())))
+    check(RssItem.Dao.insert(RssItem(34L, 1L, "DUMMY", "https://junk.z.x.y/ppp/qqq", None, LocalDateTime.now(), LocalDateTime.now(), None,None,None,None)))
   }
 
   test("delete") {

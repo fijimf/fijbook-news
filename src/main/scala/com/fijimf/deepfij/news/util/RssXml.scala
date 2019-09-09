@@ -30,7 +30,7 @@ object RssXml {
         pubDate <- (item \ "pubDate").headOption
         date <- parseDate(pubDate.text)
       } yield {
-        RssItem(0L, id, scrubText(title), text(link), img.map(text), date.toLocalDateTime, LocalDateTime.now())
+        RssItem(0L, id, scrubText(title), text(link), img.map(text), date.toLocalDateTime, LocalDateTime.now(), None, None, None, None)
       }
     }).toList
   }

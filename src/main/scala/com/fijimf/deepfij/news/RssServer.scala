@@ -1,10 +1,11 @@
 package com.fijimf.deepfij.news
 
 import cats.effect.{ConcurrentEffect, ContextShift, ExitCode, Timer}
+import cats.implicits._
 import com.fijimf.deepfij.news.services.{RssFeedUpdateImpl, RssRepo}
 import doobie.util.transactor.Transactor
 import fs2.Stream
-import org.http4s.client.Client
+import org.http4s.HttpRoutes
 import org.http4s.client.blaze.BlazeClientBuilder
 import org.http4s.implicits._
 import org.http4s.server.blaze.BlazeServerBuilder
@@ -26,7 +27,11 @@ object RssServer {
       // want to extract a segments not checked
       // in the underlying routes.
       repo = new RssRepo(transactor)
-      httpApp = RssRoutes.rssFeedRoutes(repo, RssFeedUpdateImpl(client, repo)).orNotFound
+      feedService: HttpRoutes[F] = RssRoutes.rssFeedRoutes(repo, RssFeedUpdateImpl(client, repo))
+      itemService: HttpRoutes[F] = RssRoutes.rssItemRoutes(repo, RssFeedUpdateImpl(client, repo))
+      actionService: HttpRoutes[F] = RssRoutes.rssActionRoutes(repo, RssFeedUpdateImpl(client, repo))
+      jobService: HttpRoutes[F] = RssRoutes.rssJobHistoryRoutes(repo, RssFeedUpdateImpl(client, repo))
+      httpApp = (feedService <+> itemService <+> actionService <+> jobService).orNotFound
       finalHttpApp = Logger.httpApp[F](logHeaders = true, logBody = true)(httpApp)
       exitCode <- BlazeServerBuilder[F]
         .bindHttp(port = 8080, host = "0.0.0.0")

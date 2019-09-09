@@ -27,7 +27,7 @@ object RssFeed {
 
     def delete(id: Long): doobie.Update0 =
       sql"""
-        DELETE FROM rss_feed where id=${id}
+        DELETE FROM rss_feed where id=$id
       """.update
 
     def insert(feed:RssFeed): doobie.Update0 =
@@ -38,7 +38,8 @@ object RssFeed {
 
     def update(feed:RssFeed): doobie.Update0 =
       sql"""
-    UPDATE rss_feed set name=${feed.name}, url=${feed.url}) WHERE id=${feed.id}
+    UPDATE rss_feed set name=${feed.name}, url=${feed.url}
+    WHERE id=${feed.id}
     RETURNING id,name,url
     """.update
 

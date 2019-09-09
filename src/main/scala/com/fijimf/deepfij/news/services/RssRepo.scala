@@ -3,9 +3,10 @@ package com.fijimf.deepfij.news.services
 import java.sql.Timestamp
 import java.time.LocalDateTime
 
-import cats.effect.{Bracket, ContextShift, IO, Sync}
+import cats.effect.{Bracket, ContextShift, IO}
 import cats.implicits._
-import com.fijimf.deepfij.news.model.{RssFeed, RssItem}
+import com.fijimf.deepfij.news.model.RssRefreshJob.Dao.JobParam
+import com.fijimf.deepfij.news.model.{RssFeed, RssItem, RssRefreshJob}
 import doobie.implicits._
 import doobie.util.Meta
 import doobie.util.transactor.Transactor
@@ -57,21 +58,26 @@ class RssRepo[F[_]](xa: Transactor[F])(implicit F: Bracket[F, Throwable]) {
 
   def deleteItem(id: Long): F[Int] = RssItem.Dao.delete(id).run.transact(xa)
 
-    def listItems(): F[List[RssItem]] = RssItem.Dao.list.to[List].transact(xa)
+  def listItems(): F[List[RssItem]] = RssItem.Dao.list.to[List].transact(xa)
 
-    def listItemsByFeed(feedId: Long): F[List[RssItem]] = RssItem.Dao.listById(feedId).to[List].transact(xa)
+  def listItemsByFeed(feedId: Long): F[List[RssItem]] = RssItem.Dao.listById(feedId).to[List].transact(xa)
 
-    def listRecentItems(since: LocalDateTime): F[List[RssItem]] = RssItem.Dao.listAfter(since).to[List].transact(xa)
+  def listRecentItems(since: LocalDateTime): F[List[RssItem]] = RssItem.Dao.listAfter(since).to[List].transact(xa)
 
-    def listRecentItemsByFeed(feedId: Long, since: LocalDateTime): F[List[RssItem]] = RssItem.Dao.listByIdAfter(feedId, since).to[List].transact(xa)
+  def listRecentItemsByFeed(feedId: Long, since: LocalDateTime): F[List[RssItem]] = RssItem.Dao.listByIdAfter(feedId, since).to[List].transact(xa)
 
-    def findItem(id: Long): F[Option[RssItem]] = RssItem.Dao.find(id).option.transact(xa)
+  def findItem(id: Long): F[Option[RssItem]] = RssItem.Dao.find(id).option.transact(xa)
+
+  def insertRefreshJob(j:RssRefreshJob): F[RssRefreshJob] =
+    RssRefreshJob.Dao.insert(j).withUniqueGeneratedKeys[RssRefreshJob]("id","feed_id" , "start_time", "end_time" , "status_code" , "item_count" , "new_item_count").transact(xa)
+
+  def listRefreshJobs(p:JobParam): F[List[RssRefreshJob]] = RssRefreshJob.Dao.list(p).to[List].transact(xa)
+
+  def deleteRefreshJobs(p:JobParam): F[Int] = RssRefreshJob.Dao.delete(p).run.transact(xa)
+}
 
 
-  }
-
-
-  object Junk {
+object Junk {
     def main(args: Array[String]): Unit = {
 
       import doobie.util.ExecutionContexts
@@ -84,7 +90,15 @@ class RssRepo[F[_]](xa: Transactor[F])(implicit F: Bracket[F, Throwable]) {
         ExecutionContexts.synchronous // just for testing
       )
 
-      val ints: List[Int] = List(RssItem.Dao.dropDdl.run, RssFeed.Dao.dropDdl.run, RssItem.Dao.createDdl.run, RssFeed.Dao.createDdl.run).sequence.transact(xa).unsafeRunSync()
+      val ints: List[Int] = List(
+        RssItem.Dao.dropDdl.run,
+        RssFeed.Dao.dropDdl.run,
+        RssRefreshJob.Dao.dropDdl.run,
+        RssItem.Dao.createDdl.run,
+        RssFeed.Dao.createDdl.run,
+        RssRefreshJob.Dao.createDdl.run
+
+      ).sequence.transact(xa).unsafeRunSync()
       println(ints)
 
     }

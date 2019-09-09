@@ -7,7 +7,7 @@ import doobie.implicits._
 import doobie.util.Meta
 
 final case class
-RssItem(id: Long, rssFeedId: Long, title: String, url: String, image: Option[String], publishedAt: LocalDateTime, retrievedAt: LocalDateTime)
+RssItem(id: Long, rssFeedId: Long, title: String, url: String, image: Option[String], publishedAt: LocalDateTime, retrievedAt: LocalDateTime, verifiedAt:Option[LocalDateTime], statusCode:Option[Int], responseTime:Option[Int], responseSize:Option[Int])
 
 object RssItem {
 
@@ -23,7 +23,11 @@ object RssItem {
         url VARCHAR(256) NOT NULL,
         image VARCHAR(256) NULL,
         published_at TIMESTAMP NOT NULL,
-        retrieved_at TIMESTAMP NOT NULL
+        retrieved_at TIMESTAMP NOT NULL,
+        verified_at TIMESTAMP NULL,
+        status_code INT NULL,
+        response_time INT NULL,
+        response_size INT NULL
       );
       CREATE UNIQUE INDEX ON rss_item(feed_id, url);
        """.update
@@ -43,33 +47,44 @@ object RssItem {
     INSERT INTO rss_item(feed_id, title, url, image, published_at, retrieved_at)
     VALUES  (${item.rssFeedId}, ${item.title}, ${item.url}, ${item.image}, ${item.publishedAt}, ${item.retrievedAt})
     ON CONFLICT (feed_id, url) DO UPDATE SET title=excluded.title, image=excluded.image, published_at=excluded.published_at, retrieved_at=excluded.retrieved_at WHERE excluded.published_at > rss_item.published_at
-    RETURNING id,feed_id, title, url, image, published_at, retrieved_at
+    RETURNING id,feed_id, title, url, image, published_at, retrieved_at, verified_at, status_code, response_time, response_size
     """.update
 
     def update(item:RssItem): doobie.Update0 = sql"""
-    UPDATE rss_item SET feed_id=${item.rssFeedId}, title=${item.title}, url=${item.url}, image=${item.image}, published_at=${item.publishedAt}, retrieved_at=${item.retrievedAt}
+    UPDATE rss_item SET
+      feed_id=${item.rssFeedId},
+      title=${item.title},
+      url=${item.url},
+      image=${item.image},
+      published_at=${item.publishedAt},
+      retrieved_at=${item.retrievedAt},
+      verified_at=${item.verifiedAt},
+      status_code=${item.statusCode},
+      response_time=${item.responseTime},
+      response_size=${item.verifiedAt}
+
     WHERE id=${item.id}
-    RETURNING id,feed_id, title, url, image, published_at, retrieved_at
+    RETURNING id,feed_id, title, url, image, published_at, retrieved_at,  verified_at, status_code, response_time, response_size
     """.update
 
     def find(id: Long): doobie.Query0[RssItem] = sql"""
-       SELECT id,feed_id, title, url, image, published_at, retrieved_at FROM rss_item Where id = $id
+       SELECT id,feed_id, title, url, image, published_at, retrieved_at, verified_at, status_code, response_time, response_size FROM rss_item Where id = $id
       """.query[RssItem]
 
     def list: doobie.Query0[RssItem] = sql"""
-                     SELECT id,feed_id, title, url, image, published_at, retrieved_at FROM rss_item
+                     SELECT id,feed_id, title, url, image, published_at, retrieved_at,  verified_at, status_code, response_time, response_size FROM rss_item
       """.query[RssItem]
 
     def listById(feedId: Long):  doobie.Query0[RssItem]  = sql"""
-                     SELECT id,feed_id, title, url, image, published_at, retrieved_at FROM rss_item WHERE feed_id=$feedId
+                     SELECT id,feed_id, title, url, image, published_at, retrieved_at, verified_at, status_code, response_time, response_size FROM rss_item WHERE feed_id=$feedId
       """.query[RssItem]
 
     def listAfter(since: LocalDateTime):  doobie.Query0[RssItem]  = sql"""
-                     SELECT id,feed_id, title, url, image, published_at, retrieved_at FROM rss_item WHERE published_at > $since
+                     SELECT id,feed_id, title, url, image, published_at, retrieved_at, verified_at, status_code, response_time, response_size FROM rss_item WHERE published_at > $since
       """.query[RssItem]
 
     def listByIdAfter(feedId: Long, since: LocalDateTime): doobie.Query0[RssItem] = sql"""
-                     SELECT id,feed_id, title, url, image, published_at, retrieved_at FROM rss_item WHERE published_at > $since and feed_id=$feedId
+                     SELECT id,feed_id, title, url, image, published_at, retrieved_at, verified_at, status_code, response_time, response_size FROM rss_item WHERE published_at > $since and feed_id=$feedId
       """.query[RssItem]
   }
 
