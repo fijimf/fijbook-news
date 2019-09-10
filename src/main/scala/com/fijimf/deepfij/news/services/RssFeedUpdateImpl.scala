@@ -9,7 +9,7 @@ import com.fijimf.deepfij.news.util.RssXml
 import org.http4s.client.{Client, UnexpectedStatus}
 import org.slf4j.{Logger, LoggerFactory}
 
-final case class RssFeedUpdateImpl[F[_]](httpClient: Client[F], repo: RssRepo[F])(implicit F: Async[F])  extends RssFeedUpdate [F]{
+final case class RssFeedUpdateImpl[F[_]](httpClient: Client[F], repo: RssRepo[F])(implicit F: Async[F]) {
   val log:Logger=LoggerFactory.getLogger(getClass)
 
   case class FeedUpdateState(feedId: Long, startTime: LocalDateTime, feed: Option[RssFeed], body: Option[String], status: Int, parsedItems: List[RssItem], savedItems: List[RssItem]) {

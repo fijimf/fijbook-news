@@ -142,7 +142,6 @@ object RssRoutes {
           resp
         }
 
-
       case req@DELETE -> Root / "refreshJobs" => val p=JobParam.fromReq(req)
         for {
           num<- r.deleteRefreshJobs(p)
