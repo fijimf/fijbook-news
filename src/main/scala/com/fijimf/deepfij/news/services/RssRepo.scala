@@ -80,8 +80,8 @@ object Junk {
       val xa: Aux[IO, Unit] = Transactor.fromDriverManager[IO](
         "org.postgresql.Driver", // driver classname
         "jdbc:postgresql://localhost:5432/deepfijdb", // connect URL (driver-specific)
-        "fijuser", // user
-        "mut()mb()", // password
+        System.getenv("DBUSER"),
+        System.getenv("DBPASSWORD"),
         ExecutionContexts.synchronous // just for testing
       )
 
