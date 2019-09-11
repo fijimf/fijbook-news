@@ -13,4 +13,5 @@
   <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
+ <logger name="org.http4s" level="INFO" />
 </configuration>

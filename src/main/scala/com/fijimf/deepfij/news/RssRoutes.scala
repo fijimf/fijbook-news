@@ -1,13 +1,12 @@
 package com.fijimf.deepfij.news
 
-import java.time.format.DateTimeFormatter
-
 import cats.Applicative
 import cats.effect.Sync
 import cats.implicits._
+import com.fijimf.deepfij.news.model.RssItem.ItemParam
 import com.fijimf.deepfij.news.model.RssRefreshJob.Dao.JobParam
 import com.fijimf.deepfij.news.model.{RssFeed, RssItem, RssRefreshJob}
-import com.fijimf.deepfij.news.services.{RssFeedUpdateImpl, RssRepo}
+import com.fijimf.deepfij.news.services.{RssFeedUpdate, RssFeedVerify, RssRepo}
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.{Decoder, Encoder}
 import org.http4s.circe.{jsonEncoderOf, jsonOf}
@@ -37,7 +36,7 @@ object RssRoutes {
   implicit def listItemEntityEncoder[F[_] : Applicative]: EntityEncoder[F, List[RssItem]] = jsonEncoderOf
   implicit def listRefreshJobEntityEncoder[F[_] : Applicative]: EntityEncoder[F, List[RssRefreshJob]] = jsonEncoderOf
 
-  def rssFeedRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdateImpl[F])(implicit F: Sync[F]): HttpRoutes[F] = {
+  def rssFeedRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdate[F])(implicit F: Sync[F]): HttpRoutes[F] = {
     val dsl: Http4sDsl[F] = new Http4sDsl[F] {}
     import dsl._
     HttpRoutes.of[F] {
@@ -58,9 +57,10 @@ object RssRoutes {
         } yield {
           resp
         }
-      case GET -> Root / "feeds" / feedId / "items" => // [after=yyyyMMddHHmmss] [skipMissing] [skipUnverified]
+      case req@GET -> Root / "feeds" / feedId / "items" =>
+        val p: ItemParam = ItemParam.fromReq(Some(feedId.toLong), req)
         for {
-          items <- r.listItemsByFeed(feedId.toLong)
+          items <- r.listItems(p)
           resp <- items match {
             case Nil => NotFound()
             case list => Ok(list)
@@ -68,9 +68,10 @@ object RssRoutes {
         } yield {
           resp
         }
-      case GET -> Root / "feeds" / feedId / "items" / itemId =>
+      case req@GET -> Root / "feeds" / feedId / "items" / itemId =>
+        val p: ItemParam = ItemParam.fromReq(Some(feedId.toLong), req)
         for {
-          items <- r.listItemsByFeed(feedId.toLong)
+          items <- r.listItems(p)
           resp <- items.filter(_.id === itemId.toLong) match {
             case Nil => NotFound()
             case list => Ok(list)
@@ -97,13 +98,14 @@ object RssRoutes {
     }
   }
 
-  def rssItemRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdateImpl[F])(implicit F: Sync[F]): HttpRoutes[F] = {
+  def rssItemRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdate[F])(implicit F: Sync[F]): HttpRoutes[F] = {
     val dsl: Http4sDsl[F] = new Http4sDsl[F] {}
     import dsl._
     HttpRoutes.of[F] {
-      case GET -> Root / "items" => //[after=yyyyMMddHHmmss] [skipMissing] [skipUnverified]
+      case req@GET -> Root / "items" =>
+        val p: ItemParam = ItemParam.fromReq(None, req)
         for {
-          items <- r.listItems()
+          items <- r.listItems(p)
           resp <- Ok(items)
         } yield {
           resp
@@ -129,7 +131,7 @@ object RssRoutes {
     }
   }
 
-  def rssJobHistoryRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdateImpl[F])(implicit F: Sync[F]): HttpRoutes[F] = {
+  def rssJobHistoryRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdate[F])(implicit F: Sync[F]): HttpRoutes[F] = {
     val dsl: Http4sDsl[F] = new Http4sDsl[F] {}
     import dsl._
     HttpRoutes.of[F] {
@@ -152,7 +154,7 @@ object RssRoutes {
     }
   }
 
-  def rssActionRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdateImpl[F])(implicit F: Sync[F]): HttpRoutes[F] = {
+  def rssActionRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdate[F], verifier: RssFeedVerify[F])(implicit F: Sync[F]): HttpRoutes[F] = {
     val dsl: Http4sDsl[F] = new Http4sDsl[F] {}
     import dsl._
     HttpRoutes.of[F] {
@@ -165,7 +167,14 @@ object RssRoutes {
           resp
         }
 
-      case POST -> Root / "verify" / feedId => NotImplemented() //[after=yyyyMMddHHmmss] [skipMissing] [skipUnverified]
+      case req@POST -> Root / "verify" / feedId =>
+        val p = ItemParam.fromReq(Some(feedId.toLong), req)
+        for {
+          items <- verifier.verifyFeed(p)
+          resp <- Ok(items)
+        } yield {
+          resp
+        }
     }
   }
 }

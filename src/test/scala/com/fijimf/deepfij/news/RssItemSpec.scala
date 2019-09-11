@@ -4,9 +4,10 @@ import java.time.LocalDateTime
 
 import cats.effect.{ContextShift, IO}
 import com.fijimf.deepfij.news.model.RssItem
-import doobie.util.{Colors, ExecutionContexts}
+import com.fijimf.deepfij.news.model.RssItem.ItemParam
 import doobie.util.transactor.Transactor
 import doobie.util.transactor.Transactor.Aux
+import doobie.util.{Colors, ExecutionContexts}
 import org.scalatest.{FunSuite, Matchers}
 
 class RssItemSpec extends FunSuite with Matchers with doobie.scalatest.IOChecker {
@@ -41,20 +42,53 @@ class RssItemSpec extends FunSuite with Matchers with doobie.scalatest.IOChecker
     check(RssItem.Dao.find(0L))
   }
 
-  test("list") {
-    check(RssItem.Dao.list)
-  }
+  List(
+    ItemParam(None, None, None, skipMissing = true, skipUnverified = true),
+    ItemParam(None, Some(LocalDateTime.now()), None, skipMissing = true, skipUnverified = true),
+    ItemParam(None, None, Some(LocalDateTime.now()), skipMissing = true, skipUnverified = true),
+    ItemParam(None, Some(LocalDateTime.now()), Some(LocalDateTime.now()), skipMissing = true, skipUnverified = true),
 
-  test("list by feed") {
-    check(RssItem.Dao.listById(0L))
-  }
+    ItemParam(None, None, None, skipMissing = true, skipUnverified = false),
+    ItemParam(None, Some(LocalDateTime.now()), None, skipMissing = true, skipUnverified = false),
+    ItemParam(None, None, Some(LocalDateTime.now()), skipMissing = true, skipUnverified = false),
+    ItemParam(None, Some(LocalDateTime.now()), Some(LocalDateTime.now()), skipMissing = true, skipUnverified = false),
 
-  test("list since") {
-    check(RssItem.Dao.listAfter(LocalDateTime.now.minusDays(1)))
-  }
+    ItemParam(None, None, None, skipMissing = false, skipUnverified = true),
+    ItemParam(None, Some(LocalDateTime.now()), None, skipMissing = false, skipUnverified = true),
+    ItemParam(None, None, Some(LocalDateTime.now()), skipMissing = false, skipUnverified = true),
+    ItemParam(None, Some(LocalDateTime.now()), Some(LocalDateTime.now()), skipMissing = false, skipUnverified = true),
 
-  test("list by feed since") {
-    check(RssItem.Dao.listByIdAfter(0L, LocalDateTime.now.minusDays(1)))
-  }
+    ItemParam(None, None, None, skipMissing = false, skipUnverified = false),
+    ItemParam(None, Some(LocalDateTime.now()), None, skipMissing = false, skipUnverified = false),
+    ItemParam(None, None, Some(LocalDateTime.now()), skipMissing = false, skipUnverified = false),
+    ItemParam(None, Some(LocalDateTime.now()), Some(LocalDateTime.now()), skipMissing = false, skipUnverified = false),
+
+    ItemParam(Some(1L), None, None, skipMissing = true, skipUnverified = true),
+    ItemParam(Some(1L), Some(LocalDateTime.now()), None, skipMissing = true, skipUnverified = true),
+    ItemParam(Some(1L), None, Some(LocalDateTime.now()), skipMissing = true, skipUnverified = true),
+    ItemParam(Some(1L), Some(LocalDateTime.now()), Some(LocalDateTime.now()), skipMissing = true, skipUnverified = true),
+
+    ItemParam(Some(1L), None, None, skipMissing = true, skipUnverified = false),
+    ItemParam(Some(1L), Some(LocalDateTime.now()), None, skipMissing = true, skipUnverified = false),
+    ItemParam(Some(1L), None, Some(LocalDateTime.now()), skipMissing = true, skipUnverified = false),
+    ItemParam(Some(1L), Some(LocalDateTime.now()), Some(LocalDateTime.now()), skipMissing = true, skipUnverified = false),
+
+    ItemParam(Some(1L), None, None, skipMissing = false, skipUnverified = true),
+    ItemParam(Some(1L), Some(LocalDateTime.now()), None, skipMissing = false, skipUnverified = true),
+    ItemParam(Some(1L), None, Some(LocalDateTime.now()), skipMissing = false, skipUnverified = true),
+    ItemParam(Some(1L), Some(LocalDateTime.now()), Some(LocalDateTime.now()), skipMissing = false, skipUnverified = true),
+
+    ItemParam(Some(1L), None, None, skipMissing = false, skipUnverified = false),
+    ItemParam(Some(1L), Some(LocalDateTime.now()), None, skipMissing = false, skipUnverified = false),
+    ItemParam(Some(1L), None, Some(LocalDateTime.now()), skipMissing = false, skipUnverified = false),
+    ItemParam(Some(1L), Some(LocalDateTime.now()), Some(LocalDateTime.now()), skipMissing = false, skipUnverified = false)
+  ).foreach(p => {
+    test(s"list $p") {
+      check(RssItem.Dao.list(p))
+    }
+  })
+
+
+
 
 }

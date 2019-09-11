@@ -5,6 +5,7 @@ import java.time.LocalDateTime
 
 import cats.effect.{Bracket, ContextShift, IO}
 import cats.implicits._
+import com.fijimf.deepfij.news.model.RssItem.ItemParam
 import com.fijimf.deepfij.news.model.RssRefreshJob.Dao.JobParam
 import com.fijimf.deepfij.news.model.{RssFeed, RssItem, RssRefreshJob}
 import doobie.implicits._
@@ -37,12 +38,12 @@ class RssRepo[F[_]](xa: Transactor[F])(implicit F: Bracket[F, Throwable]) {
 
   def insertItem(item: RssItem): fs2.Stream[F, RssItem] = {
     assert(item.id === 0L)
-    RssItem.Dao.insert(item).withGeneratedKeys[RssItem]("id", "feed_id", "title", "url", "image", "published_at", "retrieved_at").transact(xa)
+    RssItem.Dao.insert(item).withGeneratedKeys[RssItem]("id", "feed_id", "title", "url", "image", "published_at", "retrieved_at", "verified_at", "status_code", "response_time", "response_size").transact(xa)
   }
 
   def updateItem(item: RssItem): fs2.Stream[F, RssItem] = {
     assert(item.id =!= 0L)
-    RssItem.Dao.update(item).withGeneratedKeys[RssItem]("id", "feed_id", "title", "url", "image", "published_at", "retrieved_at").transact(xa)
+    RssItem.Dao.update(item).withGeneratedKeys[RssItem]("id", "feed_id", "title", "url", "image", "published_at", "retrieved_at", "verified_at", "status_code", "response_time", "response_size").transact(xa)
   }
 
   def saveItems(items: List[RssItem]): fs2.Stream[F, RssItem] = {
@@ -51,20 +52,14 @@ class RssRepo[F[_]](xa: Transactor[F])(implicit F: Bracket[F, Throwable]) {
 
   private def upsertItem(i: RssItem): fs2.Stream[F, RssItem] = {
     if (i.id === 0L)
-      RssItem.Dao.insert(i).withGeneratedKeys[RssItem]("id", "feed_id", "title", "url", "image", "published_at", "retrieved_at").transact(xa)
+      RssItem.Dao.insert(i).withGeneratedKeys[RssItem]("id", "feed_id", "title", "url", "image", "published_at", "retrieved_at", "verified_at", "status_code", "response_time", "response_size").transact(xa)
     else
-      RssItem.Dao.update(i).withGeneratedKeys[RssItem]("id", "feed_id", "title", "url", "image", "published_at", "retrieved_at").transact(xa)
+      RssItem.Dao.update(i).withGeneratedKeys[RssItem]("id", "feed_id", "title", "url", "image", "published_at", "retrieved_at", "verified_at", "status_code", "response_time", "response_size").transact(xa)
   }
 
   def deleteItem(id: Long): F[Int] = RssItem.Dao.delete(id).run.transact(xa)
 
-  def listItems(): F[List[RssItem]] = RssItem.Dao.list.to[List].transact(xa)
-
-  def listItemsByFeed(feedId: Long): F[List[RssItem]] = RssItem.Dao.listById(feedId).to[List].transact(xa)
-
-  def listRecentItems(since: LocalDateTime): F[List[RssItem]] = RssItem.Dao.listAfter(since).to[List].transact(xa)
-
-  def listRecentItemsByFeed(feedId: Long, since: LocalDateTime): F[List[RssItem]] = RssItem.Dao.listByIdAfter(feedId, since).to[List].transact(xa)
+  def listItems(p:ItemParam): F[List[RssItem]] = RssItem.Dao.list(p).to[List].transact(xa)
 
   def findItem(id: Long): F[Option[RssItem]] = RssItem.Dao.find(id).option.transact(xa)
 
