@@ -3,7 +3,6 @@ package com.fijimf.deepfij.news
 import cats.effect.{ConcurrentEffect, ContextShift, ExitCode, Timer}
 import cats.implicits._
 import com.fijimf.deepfij.news.services.{RssFeedUpdate, RssFeedVerify, RssRepo}
-import com.typesafe.config.Config
 import doobie.util.transactor.Transactor
 import fs2.Stream
 import org.http4s.HttpRoutes
@@ -17,16 +16,10 @@ object RssServer {
   import scala.concurrent.ExecutionContext.Implicits.global
 
   @SuppressWarnings(Array("org.wartremover.warts.Nothing", "org.wartremover.warts.Any"))
-  def stream[F[_] : ConcurrentEffect](conf: Config)(implicit T: Timer[F], C: ContextShift[F]): Stream[F, ExitCode] = {
+  def stream[F[_] : ConcurrentEffect](transactor: Transactor[F])(implicit T: Timer[F], C: ContextShift[F]): Stream[F, ExitCode] = {
     for {
 
       client <- BlazeClientBuilder[F](global).stream
-      transactor = Transactor.fromDriverManager[F](
-        driver = conf.getString("fijbook.news.db.driver"),
-        url = conf.getString("fijbook.news.db.url"),
-        user = conf.getString("fijbook.news.db.user"),
-        pass = conf.getString("fijbook.news.db.password")
-      )
       // Combine Service Routes into an HttpApp.
       // Can also be done via a Router if you
       // want to extract a segments not checked

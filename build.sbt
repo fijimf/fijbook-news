@@ -4,6 +4,7 @@ val DoobieVersion = "0.7.0"
 val Specs2Version = "4.1.0"
 val LogbackVersion = "1.2.3"
 val TypesafeConfVersion = "1.3.4"
+val FlywayVersion = "6.0.3"
 
 lazy val root = (project in file("."))
   .settings(
@@ -19,11 +20,13 @@ lazy val root = (project in file("."))
       "io.circe"        %% "circe-generic"       % CirceVersion,
       "org.tpolecat"    %% "doobie-core"         % DoobieVersion,
       "org.tpolecat"    %% "doobie-postgres"     % DoobieVersion,
+      "org.tpolecat"    %% "doobie-hikari"       % DoobieVersion,
       "org.tpolecat"    %% "doobie-specs2"       % DoobieVersion,
       "org.tpolecat"    %% "doobie-scalatest"    % DoobieVersion,
       "org.specs2"      %% "specs2-core"         % Specs2Version % "test",
       "ch.qos.logback"  %  "logback-classic"     % LogbackVersion,
-      "com.typesafe"    %  "config"              % TypesafeConfVersion
+      "com.typesafe"    %  "config"              % TypesafeConfVersion,
+      "org.flywaydb"    % "flyway-core"          % FlywayVersion
     ),
     addCompilerPlugin("org.typelevel" %% "kind-projector"     % "0.10.3"),
     addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.0")
