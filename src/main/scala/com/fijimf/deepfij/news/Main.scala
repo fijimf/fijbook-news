@@ -53,7 +53,7 @@ object Main extends IOApp {
         Flyway
           .configure()
           .dataSource(dataSource)
-          .locations("classpath:db_migrations")
+          .locations("classpath:db/migration")
           .load()
           .migrate()
       }

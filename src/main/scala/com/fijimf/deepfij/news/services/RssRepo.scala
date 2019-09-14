@@ -70,33 +70,3 @@ class RssRepo[F[_]](xa: Transactor[F])(implicit F: Bracket[F, Throwable]) {
 
   def deleteRefreshJobs(p:JobParam): F[Int] = RssRefreshJob.Dao.delete(p).run.transact(xa)
 }
-
-
-object Junk {
-    def main(args: Array[String]): Unit = {
-
-      import doobie.util.ExecutionContexts
-      implicit val cs: ContextShift[IO] = IO.contextShift(ExecutionContexts.synchronous)
-      val xa: Aux[IO, Unit] = Transactor.fromDriverManager[IO](
-        "org.postgresql.Driver", // driver classname
-        "jdbc:postgresql://localhost:5432/deepfijdb", // connect URL (driver-specific)
-        System.getenv("DBUSER"),
-        System.getenv("DBPASSWORD"),
-        ExecutionContexts.synchronous // just for testing
-      )
-
-      val ints: List[Int] = List(
-        RssItem.Dao.dropDdl.run,
-        RssFeed.Dao.dropDdl.run,
-        RssRefreshJob.Dao.dropDdl.run,
-        RssItem.Dao.createDdl.run,
-        RssFeed.Dao.createDdl.run,
-        RssRefreshJob.Dao.createDdl.run
-
-      ).sequence.transact(xa).unsafeRunSync()
-      println(ints)
-
-    }
-
-
-  }

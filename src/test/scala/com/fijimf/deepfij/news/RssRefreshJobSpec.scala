@@ -18,15 +18,6 @@ class RssRefreshJobSpec extends FunSuite with Matchers with doobie.scalatest.IOC
     "org.postgresql.Driver", "jdbc:postgresql:deepfijdb", "fijuser", "mut()mb()"
   )
 
-
-  test(s"create ddl") {
-    check(RssRefreshJob.Dao.createDdl)
-  }
-
-  test(s"drop ddl") {
-    check(RssRefreshJob.Dao.dropDdl)
-  }
-
   test("insert") {
     check(RssRefreshJob.Dao.insert(RssRefreshJob (0L,1L,LocalDateTime.now(), LocalDateTime.now().plusSeconds(10L), 200, 12, 0)))
   }

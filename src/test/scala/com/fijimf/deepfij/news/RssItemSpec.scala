@@ -18,15 +18,6 @@ class RssItemSpec extends FunSuite with Matchers with doobie.scalatest.IOChecker
     "org.postgresql.Driver", "jdbc:postgresql:deepfijdb", "fijuser", "mut()mb()"
   )
 
-
-  test(s"create ddl") {
-    check(RssItem.Dao.createDdl)
-  }
-
-  test(s"drop ddl") {
-    check(RssItem.Dao.dropDdl)
-  }
-
   test("insert") {
     check(RssItem.Dao.insert(RssItem(0L, 1L, "DUMMY", "https://junk.z.x.y/ppp/qqq", None, LocalDateTime.now(), LocalDateTime.now(), None,None,None,None)))
   }

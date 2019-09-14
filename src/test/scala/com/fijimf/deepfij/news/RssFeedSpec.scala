@@ -15,15 +15,6 @@ class RssFeedSpec extends FunSuite with Matchers with doobie.scalatest.IOChecker
     "org.postgresql.Driver", "jdbc:postgresql:deepfijdb", "fijuser", "mut()mb()"
   )
 
-
-  test(s"create ddl") {
-    check(RssFeed.Dao.createDdl)
-  }
-
-  test(s"drop ddl") {
-    check(RssFeed.Dao.dropDdl)
-  }
-
   test("insert") {
     check(RssFeed.Dao.insert(RssFeed(0L, "DUMMY", "https://junk.z.x.y/ppp/qqq")))
   }

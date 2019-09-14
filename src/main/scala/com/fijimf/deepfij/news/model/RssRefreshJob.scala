@@ -39,25 +39,6 @@ object RssRefreshJob {
         }
     }
 
-    def createDdl: doobie.Update0 =
-      sql"""
-      CREATE TABLE rss_refresh_job (
-        id BIGSERIAL NOT NULL,
-        feed_id BIGINT NOT NULL,
-        start_time TIMESTAMP NOT NULL,
-        end_time TIMESTAMP NOT NULL,
-        status_code INT NOT NULL,
-        item_count INT NOT NULL,
-        new_item_count INT NOT NULL
-      );
-    """.update
-
-
-    def dropDdl: doobie.Update0 =
-      sql"""
-        DROP TABLE IF EXISTS rss_refresh_job;
-      """.update
-
     def insert(j: RssRefreshJob): doobie.Update0=
       sql"""
         INSERT INTO rss_refresh_job(feed_id , start_time, end_time , status_code , item_count , new_item_count )
