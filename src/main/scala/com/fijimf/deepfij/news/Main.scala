@@ -54,6 +54,7 @@ object Main extends IOApp {
           .configure()
           .dataSource(dataSource)
           .locations("classpath:db/migration")
+          .baselineOnMigrate(true)
           .table("flyway_schema_history_news")
           .load()
           .migrate()
