@@ -7,10 +7,8 @@ import cats.implicits._
 import com.fijimf.deepfij.news.model.RssItem
 import com.fijimf.deepfij.news.model.RssItem.ItemParam
 import org.http4s.client.{Client, UnexpectedStatus}
-import org.slf4j.{Logger, LoggerFactory}
 
 final case class RssFeedVerify[F[_]](httpClient: Client[F], repo: RssRepo[F])(implicit F: Async[F], clock: Clock[F]) {
-  val log: Logger = LoggerFactory.getLogger(getClass)
 
   def verifyFeed(p: ItemParam): F[List[RssItem]] = {
     for {

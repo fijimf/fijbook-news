@@ -3,7 +3,7 @@ package com.fijimf.deepfij.news.services
 import java.sql.Timestamp
 import java.time.LocalDateTime
 
-import cats.effect.{Bracket, ContextShift, IO}
+import cats.effect.Bracket
 import cats.implicits._
 import com.fijimf.deepfij.news.model.RssItem.ItemParam
 import com.fijimf.deepfij.news.model.RssRefreshJob.Dao.JobParam
@@ -11,7 +11,6 @@ import com.fijimf.deepfij.news.model.{RssFeed, RssItem, RssRefreshJob}
 import doobie.implicits._
 import doobie.util.Meta
 import doobie.util.transactor.Transactor
-import doobie.util.transactor.Transactor.Aux
 import fs2.Pure
 
 
