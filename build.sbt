@@ -27,7 +27,8 @@ lazy val root = (project in file("."))
       "org.specs2"      %% "specs2-core"         % Specs2Version % "test",
       "ch.qos.logback"  %  "logback-classic"     % LogbackVersion,
       "com.typesafe"    %  "config"              % TypesafeConfVersion,
-      "org.flywaydb"    % "flyway-core"          % FlywayVersion
+      "org.flywaydb"    %  "flyway-core"         % FlywayVersion,
+      "com.spotify"     %  "docker-client"       % "8.14.0"
     ),
     addCompilerPlugin("org.typelevel" %% "kind-projector"     % "0.10.3"),
     addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.0")
@@ -39,8 +40,8 @@ maintainer in Docker := "Jim Frohnhofer <fijimf@gmail.com>"
 packageSummary in Docker := "REST microservice to scrape RSS"
 packageDescription := "REST microservice to scrape RSS"
 
-wartremoverWarnings ++= Warts.allBut(Warts.unsafe:_*)
-wartremoverErrors ++= Warts.unsafe
+//wartremoverWarnings ++= Warts.allBut(Warts.unsafe:_*)
+wartremoverErrors ++= Warts.unsafe.filter(_ == Wart.ImplicitParameter)
 scalacOptions ++= Seq(
   "-deprecation",
   "-encoding", "UTF-8",
