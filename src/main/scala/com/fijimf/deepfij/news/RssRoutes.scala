@@ -14,10 +14,24 @@ import org.http4s.dsl.Http4sDsl
 import org.http4s.{EntityDecoder, EntityEncoder, HttpRoutes}
 import org.slf4j.{Logger, LoggerFactory}
 import com.fijimf.deepfij.news.model._
+import com.fijimf.deepfij.news.util.ServerInfo
 object RssRoutes {
   val log: Logger =LoggerFactory.getLogger(RssRoutes.getClass)
 
-  def rssFeedRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdate[F])(implicit F: Sync[F]): HttpRoutes[F] = {
+  def rssHealthcheckRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdate[F])(implicit F: Sync[F]): HttpRoutes[F] = {
+    val dsl: Http4sDsl[F] = new Http4sDsl[F] {}
+    import dsl._
+    HttpRoutes.of[F] {
+      case GET -> Root / "status" =>
+        for {
+          status<-r.healthcheck.map(isOk=>ServerInfo.fromStatus(isOk))
+          resp <- if (status.isOk) Ok(status) else InternalServerError(status)
+        } yield {
+          resp
+        }
+    }
+  }
+ def rssFeedRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdate[F])(implicit F: Sync[F]): HttpRoutes[F] = {
     val dsl: Http4sDsl[F] = new Http4sDsl[F] {}
     import dsl._
     HttpRoutes.of[F] {

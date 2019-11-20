@@ -3,6 +3,7 @@ package com.fijimf.deepfij.news
 import cats.effect.{ConcurrentEffect, ContextShift, ExitCode, Timer}
 import cats.implicits._
 import com.fijimf.deepfij.news.services.{RssFeedUpdate, RssFeedVerify, RssRepo}
+import com.fijimf.deepfij.news.util.Banner
 import doobie.util.transactor.Transactor
 import fs2.Stream
 import org.http4s.HttpRoutes
@@ -15,8 +16,10 @@ object RssServer {
 
   import scala.concurrent.ExecutionContext.Implicits.global
 
+
+
   @SuppressWarnings(Array("org.wartremover.warts.Nothing", "org.wartremover.warts.Any"))
-  def stream[F[_] : ConcurrentEffect](transactor: Transactor[F])(implicit T: Timer[F], C: ContextShift[F]): Stream[F, ExitCode] = {
+  def stream[F[_] : ConcurrentEffect](transactor: Transactor[F], port:Int)(implicit T: Timer[F], C: ContextShift[F]): Stream[F, ExitCode] = {
     for {
 
       client <- BlazeClientBuilder[F](global).stream
@@ -29,11 +32,13 @@ object RssServer {
       itemService: HttpRoutes[F] = RssRoutes.rssItemRoutes(repo, RssFeedUpdate(client, repo))
       actionService: HttpRoutes[F] = RssRoutes.rssActionRoutes(repo, RssFeedUpdate(client, repo), RssFeedVerify(client, repo))
       jobService: HttpRoutes[F] = RssRoutes.rssJobHistoryRoutes(repo, RssFeedUpdate(client, repo))
-      httpApp = (feedService <+> itemService <+> actionService <+> jobService).orNotFound
+      healthCheckService: HttpRoutes[F] = RssRoutes.rssHealthcheckRoutes(repo, RssFeedUpdate(client, repo))
+      httpApp = (feedService <+> itemService <+> actionService <+> jobService<+>healthCheckService).orNotFound
       finalHttpApp = Logger.httpApp[F](logHeaders = true, logBody = true)(httpApp)
       exitCode <- BlazeServerBuilder[F]
-        .bindHttp(port = 8073, host = "0.0.0.0")
+        .bindHttp(port = port, host = "0.0.0.0")
         .withHttpApp(finalHttpApp)
+        .withBanner(Banner.banner)
         .serve
     } yield exitCode
     }.drain

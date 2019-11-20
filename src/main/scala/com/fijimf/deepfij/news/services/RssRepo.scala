@@ -18,6 +18,10 @@ class RssRepo[F[_]](xa: Transactor[F])(implicit F: Bracket[F, Throwable]) {
 
   implicit val localDateTimeMeta: Meta[LocalDateTime] = Meta[Timestamp].imap(ts => ts.toLocalDateTime)(ldt => Timestamp.valueOf(ldt))
 
+  def healthcheck:F[Boolean] = {
+    doobie.FC.isValid(2 /*timeout in seconds*/).transact(xa)
+  }
+
   def insertFeed(rssFeed: RssFeed): fs2.Stream[F, RssFeed] = {
     assert(rssFeed.id === 0L)
     RssFeed.Dao.insert(rssFeed).withGeneratedKeys[RssFeed]("id", "name", "url").transact(xa)
