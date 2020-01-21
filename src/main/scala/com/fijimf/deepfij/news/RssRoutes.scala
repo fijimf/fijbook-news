@@ -1,22 +1,18 @@
 package com.fijimf.deepfij.news
 
-import cats.Applicative
 import cats.effect.Sync
 import cats.implicits._
 import com.fijimf.deepfij.news.model.RssItem.ItemParam
 import com.fijimf.deepfij.news.model.RssRefreshJob.Dao.JobParam
-import com.fijimf.deepfij.news.model.{RssFeed, RssItem, RssRefreshJob}
+import com.fijimf.deepfij.news.model.{RssFeed, _}
 import com.fijimf.deepfij.news.services.{RssFeedUpdate, RssFeedVerify, RssRepo}
-import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
-import io.circe.{Decoder, Encoder}
-import org.http4s.circe.{jsonEncoderOf, jsonOf}
-import org.http4s.dsl.Http4sDsl
-import org.http4s.{EntityDecoder, EntityEncoder, HttpRoutes}
-import org.slf4j.{Logger, LoggerFactory}
-import com.fijimf.deepfij.news.model._
 import com.fijimf.deepfij.news.util.ServerInfo
+import org.http4s.HttpRoutes
+import org.http4s.dsl.Http4sDsl
+import org.slf4j.{Logger, LoggerFactory}
+
 object RssRoutes {
-  val log: Logger =LoggerFactory.getLogger(RssRoutes.getClass)
+  val log: Logger = LoggerFactory.getLogger(RssRoutes.getClass)
 
   def rssHealthcheckRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdate[F])(implicit F: Sync[F]): HttpRoutes[F] = {
     val dsl: Http4sDsl[F] = new Http4sDsl[F] {}
@@ -121,8 +117,6 @@ object RssRoutes {
       } yield {
         resp
       }
-
-
     }
   }
 
@@ -131,7 +125,7 @@ object RssRoutes {
     import dsl._
     HttpRoutes.of[F] {
       case req@GET -> Root / "refreshJobs" =>
-        val p=JobParam.fromReq(req)
+        val p: JobParam =JobParam.fromReq(req)
         for {
           list<- r.listRefreshJobs(p)
           resp<-Ok(list)
@@ -139,7 +133,8 @@ object RssRoutes {
           resp
         }
 
-      case req@DELETE -> Root / "refreshJobs" => val p=JobParam.fromReq(req)
+      case req@DELETE -> Root / "refreshJobs" =>
+        val p: JobParam =JobParam.fromReq(req)
         for {
           num<- r.deleteRefreshJobs(p)
           resp<-Ok(num)
@@ -163,7 +158,7 @@ object RssRoutes {
         }
 
       case req@POST -> Root / "verify" / feedId =>
-        val p = ItemParam.fromReq(Some(feedId.toLong), req)
+        val p: ItemParam = ItemParam.fromReq(Some(feedId.toLong), req)
         for {
           items <- verifier.verifyFeed(p)
           resp <- Ok(items)
