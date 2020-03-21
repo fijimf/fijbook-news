@@ -27,6 +27,7 @@ object RssRoutes {
         }
     }
   }
+
  def rssFeedRoutes[F[_]](r: RssRepo[F], updater: RssFeedUpdate[F])(implicit F: Sync[F]): HttpRoutes[F] = {
     val dsl: Http4sDsl[F] = new Http4sDsl[F] {}
     import dsl._
@@ -111,12 +112,13 @@ object RssRoutes {
         } yield {
           resp
         }
-      case DELETE -> Root / "items" / itemId => for {
-        i <- r.deleteItem(itemId.toLong)
-        resp <- Ok(i)
-      } yield {
-        resp
-      }
+      case DELETE -> Root / "items" / itemId =>
+        for {
+          i <- r.deleteItem(itemId.toLong)
+          resp <- Ok(i)
+        } yield {
+          resp
+        }
     }
   }
 
